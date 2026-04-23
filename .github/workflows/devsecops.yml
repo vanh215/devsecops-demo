@@ -1,0 +1,16 @@
+name: DevSecOps Pipeline
+on: [push] # Chạy tự động khi có code mới đẩy lên
+
+jobs:
+  Secret-Scanning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Clone mã nguồn về máy quét
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 2. Quét mật khẩu bị lộ bằng Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
